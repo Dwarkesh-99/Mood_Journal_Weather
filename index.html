@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Journal</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen dark:bg-gray-900 transition-colors duration-300">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-700 dark:text-indigo-400">Daily Mood Journal</h1>
+            <p class="text-gray-600 dark:text-gray-400">Track your mood alongside the weather</p>
+        </header>
+
+        <main>
+            <!-- Current Date Display with Dark Mode Toggle and Download -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-6 text-center transition-colors duration-300">
+                <div class="flex justify-between items-center mb-2">
+                    <button id="dark-mode-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                    </button>
+                    <h2 id="current-date" class="text-2xl font-semibold text-gray-800 dark:text-gray-200"></h2>
+                    <button id="download-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" title="Download all entries">
+                        <i class="fas fa-download text-indigo-600 dark:text-indigo-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Weather Display -->
+            <div id="weather-container" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-6 hidden transition-colors duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Current Weather</h3>
+                        <p id="location" class="text-gray-600 dark:text-gray-400"></p>
+                    </div>
+                    <div id="weather-info" class="flex items-center">
+                        <!-- <div id="weather-icon" class="text-4xl mr-3"></div> -->
+                        <img id="weather-icon" class="w-10 h-10 mr-3" src="" alt="Weather icon">
+
+                        <div>
+                            <p id="temperature" class="text-2xl font-bold dark:text-gray-200"></p>
+                            <p id="weather-description" class="text-gray-600 dark:text-gray-400 text-sm"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mood Selection -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 transition-colors duration-300">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">How are you feeling today?</h3>
+                <div class="grid grid-cols-5 gap-4 mb-6">
+                    <button data-mood="happy" class="mood-btn flex flex-col items-center p-3 rounded-lg transition-all hover:bg-yellow-50 dark:hover:bg-gray-700">
+                        <span class="text-4xl mb-1">😊</span>
+                        <span class="text-sm dark:text-gray-300">Happy</span>
+                    </button>
+                    <button data-mood="sad" class="mood-btn flex flex-col items-center p-3 rounded-lg transition-all hover:bg-blue-50 dark:hover:bg-gray-700">
+                        <span class="text-4xl mb-1">😢</span>
+                        <span class="text-sm dark:text-gray-300">Sad</span>
+                    </button>
+                    <button data-mood="angry" class="mood-btn flex flex-col items-center p-3 rounded-lg transition-all hover:bg-red-50 dark:hover:bg-gray-700">
+                        <span class="text-4xl mb-1">😠</span>
+                        <span class="text-sm dark:text-gray-300">Angry</span>
+                    </button>
+                    <button data-mood="calm" class="mood-btn flex flex-col items-center p-3 rounded-lg transition-all hover:bg-green-50 dark:hover:bg-gray-700">
+                        <span class="text-4xl mb-1">😌</span>
+                        <span class="text-sm dark:text-gray-300">Calm</span>
+                    </button>
+                    <button data-mood="tired" class="mood-btn flex flex-col items-center p-3 rounded-lg transition-all hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <span class="text-4xl mb-1">😴</span>
+                        <span class="text-sm dark:text-gray-300">Tired</span>
+                    </button>
+                </div>
+
+                <!-- Notes Section -->
+                <div class="mb-4">
+                    <label for="daily-notes" class="block text-gray-700 dark:text-gray-300 mb-2">Today's notes:</label>
+                    <textarea id="daily-notes" rows="3" required="required" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200" placeholder="Write something about your day..."></textarea>
+                </div>
+
+                <!-- Save Button -->
+                <button id="save-btn" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Note &#x270D;
+                </button>
+            </div>
+
+            <!-- Calendar View -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors duration-300">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Your Journal History</h3>
+                    <div class="flex space-x-2">
+                        <select id="mood-filter" class="border rounded-md px-2 py-1 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+                            <option value="all">All Moods</option>
+                            <option value="happy">Happy</option>
+                            <option value="sad">Sad</option>
+                            <option value="angry">Angry</option>
+                            <option value="calm">Calm</option>
+                            <option value="tired">Tired</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="entries-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <p id="no-entries" class="text-gray-500 dark:text-gray-400 col-span-full text-center py-4">No entries yet. Start by logging your mood today!</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg hidden fade-in">
+            Entry saved successfully!
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

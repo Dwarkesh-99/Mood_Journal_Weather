@@ -1,0 +1,90 @@
+/* Animation for toast notification */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Mood selection animation */
+.mood-selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Mood-specific background colors when selected */
+.mood-selected[data-mood="happy"] {
+    background-color: rgb(254, 249, 195) !important; /* light yellow */
+}
+
+.mood-selected[data-mood="sad"] {
+    background-color: rgb(219, 234, 254) !important; /* light blue */
+}
+
+.mood-selected[data-mood="angry"] {
+    background-color: rgb(254, 226, 226) !important; /* light red */
+}
+
+.mood-selected[data-mood="calm"] {
+    background-color: rgb(220, 252, 231) !important; /* light green */
+}
+
+.mood-selected[data-mood="tired"] {
+    background-color: rgb(243, 244, 246) !important; /* light gray */
+}
+
+/* Dark mode specific styles */
+.dark .mood-selected[data-mood="happy"] {
+    background-color: rgb(133, 77, 14) !important; /* dark yellow */
+}
+
+.dark .mood-selected[data-mood="sad"] {
+    background-color: rgb(30, 58, 138) !important; /* dark blue */
+}
+
+.dark .mood-selected[data-mood="angry"] {
+    background-color: rgb(153, 27, 27) !important; /* dark red */
+}
+
+.dark .mood-selected[data-mood="calm"] {
+    background-color: rgb(22, 101, 52) !important; /* dark green */
+}
+
+.dark .mood-selected[data-mood="tired"] {
+    background-color: rgb(75, 85, 99) !important; /* dark gray */
+}
+
+/* Smooth transitions for dark mode toggle */
+html {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Scrollbar styling for entries container */
+#entries-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#entries-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#entries-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#entries-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.dark #entries-container::-webkit-scrollbar-track {
+    background: #374151;
+}
+
+.dark #entries-container::-webkit-scrollbar-thumb {
+    background: #6b7280;
+}
